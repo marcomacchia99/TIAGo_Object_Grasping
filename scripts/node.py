@@ -46,6 +46,7 @@ def recognize(image):
             rotation = results.rotation
             translation1 = results.translation
             trans = tfBuffer.lookup_transform('/xtion_optical_frame', '/base_footprint', rospy.Time())
+            
             point = geometry_msgs.msg.PointStamped()
             point.header.frame_id='/xtion_optical_frame'
             point.header.seq=seq
