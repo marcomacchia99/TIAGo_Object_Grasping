@@ -17,17 +17,24 @@ def recognize(image):
     global translation1
     global seq
     global pub_targetPose
+
     with mp_objectron.Objectron(
             static_image_mode=False,
             max_num_objects=1,
             min_detection_confidence=0.5,
             model_name='Cup') as objectron:
+
         results = objectron.process(ros_numpy.numpify(image))
+
         if results.detected_objects:
+
             print('found object!')
+
             messageTargetPose = Pose()
+
             p = results.detected_objects[0].translation
             q = R.from_matrix(results.detected_objects[0].rotation).as_quat()
+            
             messageTargetPose.orientation = Quaternion(q[0], q[1], q[2], q[3])
             messageTargetPose.position = Point(p[0], p[1], p[2])
 
