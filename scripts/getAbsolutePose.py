@@ -4,9 +4,8 @@ import rospy
 import tf2_ros
 from tf.transformations import *
 from tf2_geometry_msgs import *
-from sensor_msgs.msg import Image
 import ros_numpy
-from geometry_msgs.msg import Pose, Point, Quaternion, PointStamped
+from geometry_msgs.msg import Pose, Quaternion, PointStamped
 from scipy.spatial.transform import Rotation as R
 
 global seq

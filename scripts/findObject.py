@@ -4,7 +4,7 @@
 from sensor_msgs.msg import Image
 import rospy
 import ros_numpy
-from geometry_msgs.msg import Twist, Pose, Point, Quaternion
+from geometry_msgs.msg import Pose, Point, Quaternion
 import mediapipe as mp
 from scipy.spatial.transform import Rotation as R
 
