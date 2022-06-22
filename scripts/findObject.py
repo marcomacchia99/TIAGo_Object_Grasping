@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#!/usr/bin/env python
 
 from sensor_msgs.msg import Image
 import rospy
@@ -9,6 +8,7 @@ import mediapipe as mp
 from scipy.spatial.transform import Rotation as R
 
 mp_objectron = mp.solutions.objectron
+
 global pub_target_rel_pose
 global pub_target_rel_pose_stamped
 
@@ -41,9 +41,10 @@ def recognize(image):
 
             pub_target_rel_pose.publish(messageTargetPose)
 
-            pose = PoseStamped(pose = messageTargetPose)
-            pose.header.frame_id='xtion_rgb_frame'
-            pub_target_rel_pose_stamped.publish(pose)
+            pose_stamped = PoseStamped(pose = messageTargetPose)
+            pose_stamped.header.frame_id='xtion_rgb_frame'
+
+            pub_target_rel_pose_stamped.publish(pose_stamped)
 
 
 if __name__ == '__main__':
@@ -51,6 +52,7 @@ if __name__ == '__main__':
     rospy.init_node('FindObject')
 
     sub_camera = rospy.Subscriber('/xtion/rgb/image_raw', Image, recognize)
+
     pub_target_rel_pose = rospy.Publisher(
         '/sofar/target_pose/relative', Pose, queue_size=1)
 

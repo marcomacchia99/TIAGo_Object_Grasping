@@ -8,6 +8,9 @@
 
   <env name="LC_NUMERIC" value="C" />
 
+  <!-- Load definition of pregrasp motion into play_motion namespace -->
+  <rosparam command="load" file="$(find SOFAR_Assignment)/config/pick_motions.yaml" /> 
+
   <!-- Gazebo simulation -->
   <include file="$(find SOFAR_Assignment)/launch/tiago_gazebo.launch">
     <arg name="robot"      value="$(arg robot)"/>

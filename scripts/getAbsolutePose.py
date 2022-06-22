@@ -5,8 +5,7 @@ import tf2_ros
 from tf.transformations import *
 from tf2_geometry_msgs import *
 import ros_numpy
-from geometry_msgs.msg import Pose, Quaternion, PointStamped, Point
-from scipy.spatial.transform import Rotation as R
+from geometry_msgs.msg import Pose, Quaternion, PointStamped
 
 global seq
 global tfBuffer
@@ -18,26 +17,21 @@ global pub_target_abs_pose
 global pub_target_abs_pose_stamped
 
 
-
 def computeAbsPose(rel_pose):
 
-    global seq
     global tfBuffer
     global listener
     global abs_pose
     global pub_target_abs_pose
     global pub_target_abs_pose_stamped
 
+    trans_base_camera = tfBuffer.lookup_transform('base_footprint',
+                                                  'xtion_rgb_frame', rospy.Time())
 
-    trans_base_camera = tfBuffer.lookup_transform('base_footprint', 
-        'xtion_rgb_frame', rospy.Time())
-    
-    
     point_from_camera = PointStamped(point=rel_pose.position)
-    
+
     abs_pose.position = do_transform_point(
         point_from_camera, trans_base_camera).point
-
 
     q0 = [trans_base_camera.transform.rotation.x, trans_base_camera.transform.rotation.y,
           trans_base_camera.transform.rotation.z, trans_base_camera.transform.rotation.w]
@@ -47,13 +41,14 @@ def computeAbsPose(rel_pose):
 
     abs_pose.orientation = Quaternion(q[0], q[1], q[2], q[3])
     pub_target_abs_pose.publish(abs_pose)
-    pose = PoseStamped(pose = abs_pose)
-    pose.header.frame_id='base_footprint'
-    pub_target_abs_pose_stamped.publish(pose)
+
+    pose_stamped = PoseStamped(pose=abs_pose)
+    pose_stamped.header.frame_id = 'base_footprint'
+
+    pub_target_abs_pose_stamped.publish(pose_stamped)
 
 
 if __name__ == '__main__':
-    seq = 1
 
     rospy.init_node('GetAbsolutePose')
 
@@ -62,15 +57,13 @@ if __name__ == '__main__':
 
     pub_target_abs_pose = rospy.Publisher(
         '/sofar/target_pose/absolute', Pose, queue_size=1)
+
     pub_target_abs_pose_stamped = rospy.Publisher(
         '/sofar/target_pose/absolute/stamped', PoseStamped, queue_size=1)
-
-        
 
     tfBuffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(tfBuffer)
 
     abs_pose = Pose()
-
 
     rospy.spin()

@@ -27,7 +27,7 @@ def goToObject(object_pose):
     sub_target_abs_pose.unregister()
 
     #pre-grasp pose
-    object_pose.position.y = object_pose.position.y -0.15
+    object_pose.position.y -= 0.15
     object_pose.orientation = Quaternion(0.5, 0.5, 0.5, 0.5)
     move_group.set_pose_target(object_pose)
 
