@@ -4,19 +4,19 @@
 from sensor_msgs.msg import Image
 import rospy
 import ros_numpy
-from geometry_msgs.msg import Pose, Point, Quaternion
+from geometry_msgs.msg import Pose, Point, Quaternion, PoseStamped
 import mediapipe as mp
 from scipy.spatial.transform import Rotation as R
 
 mp_objectron = mp.solutions.objectron
-global pub_targetPose
+global pub_target_rel_pose
+global pub_target_rel_pose_stamped
 
 
 def recognize(image):
-    global rotation
-    global translation1
-    global seq
-    global pub_targetPose
+    global pub_target_rel_pose
+    global pub_target_rel_pose_stamped
+
 
     with mp_objectron.Objectron(
             static_image_mode=False,
@@ -28,7 +28,7 @@ def recognize(image):
 
         if results.detected_objects:
 
-            print('found object!')
+            rospy.loginfo("Object found")
 
             messageTargetPose = Pose()
 
@@ -38,7 +38,11 @@ def recognize(image):
             messageTargetPose.orientation = Quaternion(q[0], q[1], q[2], q[3])
             messageTargetPose.position = Point(p[0], p[1], p[2])
 
-            pub_targetPose.publish(messageTargetPose)
+            pub_target_rel_pose.publish(messageTargetPose)
+
+            pose = PoseStamped(pose = messageTargetPose)
+            pose.header.frame_id='xtion_rgb_frame'
+            pub_target_rel_pose_stamped.publish(pose)
 
 
 if __name__ == '__main__':
@@ -46,7 +50,10 @@ if __name__ == '__main__':
     rospy.init_node('FindObject')
 
     sub_camera = rospy.Subscriber('/xtion/rgb/image_raw', Image, recognize)
-    pub_targetPose = rospy.Publisher(
-        '/sofar/target_rel_pose', Pose, queue_size=1)
+    pub_target_rel_pose = rospy.Publisher(
+        '/sofar/target_pose/relative', Pose, queue_size=1)
+
+    pub_target_rel_pose_stamped = rospy.Publisher(
+        '/sofar/target_pose/relative/stamped', PoseStamped, queue_size=1)    
 
     rospy.spin()
