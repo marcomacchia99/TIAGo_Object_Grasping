@@ -33,10 +33,11 @@ def recognize(image):
             messageTargetPose = Pose()
 
             p = results.detected_objects[0].translation
+            print(-p[2], p[0], p[1])
             q = R.from_matrix(results.detected_objects[0].rotation).as_quat()
             
             messageTargetPose.orientation = Quaternion(q[0], q[1], q[2], q[3])
-            messageTargetPose.position = Point(p[0], p[1], p[2])
+            messageTargetPose.position = Point(-p[2], p[0], p[1])
 
             pub_target_rel_pose.publish(messageTargetPose)
 

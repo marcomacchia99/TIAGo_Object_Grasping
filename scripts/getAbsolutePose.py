@@ -5,7 +5,7 @@ import tf2_ros
 from tf.transformations import *
 from tf2_geometry_msgs import *
 import ros_numpy
-from geometry_msgs.msg import Pose, Quaternion, PointStamped
+from geometry_msgs.msg import Pose, Quaternion, PointStamped, Point
 from scipy.spatial.transform import Rotation as R
 
 global seq
@@ -32,11 +32,12 @@ def computeAbsPose(rel_pose):
     trans_base_camera = tfBuffer.lookup_transform('base_footprint', 
         'xtion_rgb_frame', rospy.Time())
     
-
+    
     point_from_camera = PointStamped(point=rel_pose.position)
-
+    
     abs_pose.position = do_transform_point(
         point_from_camera, trans_base_camera).point
+
 
     q0 = [trans_base_camera.transform.rotation.x, trans_base_camera.transform.rotation.y,
           trans_base_camera.transform.rotation.z, trans_base_camera.transform.rotation.w]
@@ -64,9 +65,12 @@ if __name__ == '__main__':
     pub_target_abs_pose_stamped = rospy.Publisher(
         '/sofar/target_pose/absolute/stamped', PoseStamped, queue_size=1)
 
+        
+
     tfBuffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(tfBuffer)
 
     abs_pose = Pose()
+
 
     rospy.spin()

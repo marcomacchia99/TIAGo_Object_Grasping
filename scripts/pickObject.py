@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
+from operator import sub
 import rospy
 from tf.transformations import *
 from tf2_geometry_msgs import *
-from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Pose, Quaternion
 from scipy.spatial.transform import Rotation as R
 import moveit_commander
 import moveit_msgs.msg
@@ -21,8 +22,13 @@ def goToObject(object_pose):
     # In practice, you should use the class variables directly unless you have a good
     # reason not to.
     global move_group
+    global sub_target_abs_pose
 
+    sub_target_abs_pose.unregister()
 
+    #pre-grasp pose
+    object_pose.position.y = object_pose.position.y -0.15
+    object_pose.orientation = Quaternion(0.5, 0.5, 0.5, 0.5)
     move_group.set_pose_target(object_pose)
 
     plan = move_group.go(wait=True)
