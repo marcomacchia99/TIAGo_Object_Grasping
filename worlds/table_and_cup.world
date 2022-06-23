@@ -39,7 +39,7 @@
     <!-- Cube with ArUco markers on the sides -->
     <include>
       <uri>model://cup_blue</uri>
-      <pose>0.6 -0.05 0.815 0 0 1.5707</pose>
+      <pose>0.6 0.1 0.815 0 0 1.5707</pose>
     </include>
 
     <gui fullscreen="0">

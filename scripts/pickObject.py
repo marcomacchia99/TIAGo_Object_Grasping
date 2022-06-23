@@ -26,8 +26,11 @@ def goToObject(object_pose):
 
     sub_target_abs_pose.unregister()
 
-    #pre-grasp pose
-    object_pose.position.y -= 0.15
+    # pre-grasp pose with limits
+    object_pose.position.y = max(-0.2,object_pose.position.y-0.25)
+
+    rospy.loginfo('attempting to reach:')
+    rospy.loginfo([object_pose.position.x,object_pose.position.y,object_pose.position.z])
     object_pose.orientation = Quaternion(0.5, 0.5, 0.5, 0.5)
     move_group.set_pose_target(object_pose)
 
@@ -35,7 +38,7 @@ def goToObject(object_pose):
 
     move_group.stop()
 
-    move_group.clear_pose_targets()   
+    move_group.clear_pose_targets()
 
 
 if __name__ == '__main__':
@@ -50,5 +53,10 @@ if __name__ == '__main__':
     sub_target_abs_pose = rospy.Subscriber(
         '/sofar/target_pose/absolute', Pose, goToObject)
 
+    # object_pose = Pose()
+    # object_pose.position.x = 0.5095604789
+    # object_pose.position.y = -0.2
+    # object_pose.position.z = 0.815161196952
+    # goToObject(object_pose)
 
     rospy.spin()
