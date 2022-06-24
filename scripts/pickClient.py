@@ -8,6 +8,7 @@ from actionlib import SimpleActionClient
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from SOFAR_Assignment.srv import RelToAbsolute, RelToAbsoluteResponse
 from SOFAR_Assignment.srv import ApproachObject, ApproachObjectResponse
+from std_srvs.srv import Empty, EmptyRequest
 
 global action_client
 global pub_head_controller
@@ -114,7 +115,7 @@ def adjust_position():
     pub_vel.publish(velocity)
     rospy.sleep(1)
 
-    for i in range(round(displacement/0.25)*10):
+    for i in range(math.ceil(displacement*10/0.25)):
         velocity.linear.x = 0.25
         pub_vel.publish(velocity)
         rospy.sleep(0.1)
@@ -178,13 +179,13 @@ if __name__ == '__main__':
 
     rospy.wait_for_service('/sofar/rel_to_absolute_pose')
 
-    print(object_abs_pose.position.y)
-    displacement = -0.05-object_abs_pose.position.y
+    displacement = 0.1-object_abs_pose.position.y
 
     if displacement > 0:
         adjust_position()
 
     prepare_robot()
+    rospy.sleep(2)
 
     rospy.wait_for_service('/sofar/approach_object')
     try:
@@ -194,7 +195,16 @@ if __name__ == '__main__':
         approach_object(object_abs_pose)
 
     except rospy.ServiceException as e:
-        rospy.logerr("Could not connect to /sofar/rel_to_absolute_pose service")
+        rospy.logerr("Could not connect to /sofar/approach_object service")
         exit()
 
-    # dopo pre grasp basta andare avanti di 0.1 lentamente
+    rospy.wait_for_service('/sofar/pick_object')
+    try:
+        sub_target_rel_pose.unregister()
+
+        pick_object = rospy.ServiceProxy('/sofar/pick_object', Empty)
+        pick_object()
+
+    except rospy.ServiceException as e:
+        rospy.logerr("Could not connect to /sofar/pick_object service")
+        exit()    
