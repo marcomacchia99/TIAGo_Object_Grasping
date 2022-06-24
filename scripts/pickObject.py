@@ -29,7 +29,7 @@ def goToObject(object_pose):
     
     # save grasp pose
     grasp_pose = copy.deepcopy(object_pose.pose)
-    grasp_pose.position.y-=0.2
+    grasp_pose.position.y-=0.22
 
     # pre-grasp pose with limits
     object_pose.pose.position.y = -0.2
