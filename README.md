@@ -71,5 +71,22 @@ Object change of coordinates to base frame
 Robot grasp
 ------
 
+Rqt graph
+------
+The project graph, which illustrates the relationships between the nodes, is shown below. Keep in mind that this is a graph built by executing all the nodes at the same time in order to obtain a full graph.
+
+The graph can be generated using this command:
+ 
+```console
+$ rqt_graph
+``` 
+
+
+Flowchart (?)
+-------
+
+
+Conclusions and possible future improvements
+--------------
 
 
