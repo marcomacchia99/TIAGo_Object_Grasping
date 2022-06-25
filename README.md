@@ -39,7 +39,7 @@ To launch the simulation, you should have to run a .launch file called:
 
 [__assignment.launch__](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/launch/assignment.launch)
 
-Environment <img src="http://classic.gazebosim.org/assets/logos/gazebo_vert_pos-fd53607be2db733ff38e9a9cdae9185722e5810ea7b089405dfd36917bc4c42f.png" width="50"></h2>
+Environment <img src="https://www.generationrobots.com/blog/wp-content/uploads/2016/07/gazebo-and-ros-687x319.jpg" width="100"></h2>
 --------
 
 	https://www.generationrobots.com/blog/wp-content/uploads/2016/07/gazebo-and-ros-687x319.jpg" width="50"></h2
