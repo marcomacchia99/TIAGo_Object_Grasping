@@ -52,5 +52,9 @@ FOTO DEL MONDO CON ROBOT APPENA SPAWNATO (?)
 Implementation choices
 --------------
 First of all, the purpose of the assignment was not a simple matter to deal with and to be able to use a single script of code. We therefore decided to separate the things to do as much as possible to achieve the goal of having a more modular code.
-I
+
+Then, the approach used, was the more general that we could, to better obtain as a final result, a robot which can adjust its position depending on the object 
+coordinates in the space (however the object must remain in the range of the robot camera).
+
+Another thing to face up with was that the Objectron tool from Mediapipe returns the frames and coordinates of the robot camera frame, more in specific the /xtion/rgb topic, so we had to dedicate a whole node to extract the relative pose of the object with respect to the camera and with the correct transformations, thanks to tf package functions, have the pose of the object with respect to the base frame (base_footprint) of the robot.
 
