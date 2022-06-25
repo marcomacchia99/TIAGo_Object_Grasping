@@ -24,8 +24,8 @@ We found the tutorial and the downloadable packages here:
 
 * [Mediapipe Objectron](https://google.github.io/mediapipe/solutions/objectron)
 
-Another tool needed was the one concerned to the part of moving the robot and grasping the object in the correct way,
-it was chosen to use __MoveIt__, a system that provides the necessary trajectories for the arm of a robot to put the end effector in a given place. The wrappers provide functionality for most operations that the average user will likely need, specifically setting joint or pose goals, creating motion plans, moving the robot, adding objects into the environment and attaching/detaching objects from the robot.
+Another tool needed was the one concerned to the part of moving the robot and grasping the object in the correct way.
+__MoveIt__ was chosen for the purpose, a system that provides the necessary trajectories for the arm of a robot to put the end effector in a given place. The wrappers provide functionality for most operations that the average user will likely need, specifically setting joint or pose goals, creating motion plans, moving the robot, adding objects into the environment and attaching/detaching objects from the robot.
 
 * [MoveIt](http://docs.ros.org/en/melodic/api/moveit_tutorials/html/index.html)
  
@@ -39,5 +39,6 @@ To launch the simulation, you should have to run a .launch file called:
 
 [__assignment.launch__](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/launch/assignment.launch)
 
-
+Environment <img src="https://www.generationrobots.com/blog/wp-content/uploads/2016/07/gazebo-and-ros-687x319.jpg" width="50"></h2>
+--------
 
