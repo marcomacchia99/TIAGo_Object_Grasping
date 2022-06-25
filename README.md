@@ -6,15 +6,15 @@ Tiago Robot simulation using ROS, Rviz and Gazebo.
 Introduction <img src= "https://cdn-icons.flaticon.com/png/512/3273/premium/3273644.png?token=exp=1656069884~hmac=832ed0f5cad904d64c10fc23759c2b11" width=40 height=40>
 ------------
 
->The purpose of this assignment is to develop a software architecture that uses opensource 3D object detection models to allow a robot manipulator to independently estimate the position 
-of a given object (through an RGB-D camera) and potentially grasp it.
+>The purpose of this assignment is to develop a software architecture that uses opensource 3D object detection models to allow a robot manipulator to independently estimate the position of a given object (through an RGB-D camera) and potentially grasp it.
+In order to verify the simulation in a real environment, given the availability of the Tiago robot in the laboratory, the latter mentioned was selected to carry out the software simulation on Gazebo.
 
 
 Installing and Running <img src="https://media3.giphy.com/media/LwBuVHh34nnCPWRSzB/giphy.gif?cid=ecf05e47t4j9mb7l8j1vzdc76i2453rexlnv7iye9d4wfdep&rid=giphy.gif&ct=s" width="50"></h2>
 --------
 
-The simulatotion is built on the [__ROS__](http://wiki.ros.org) (__Robot-Operating-Systems__) platform, specifically the MELODIC version.
-To be able to use the aforementioned version it was necessary to work for the project on __Ubuntu 18__ which can be donwoloaded at [Download Ubuntu 18](https://releases.ubuntu.com/18.04/).
+The simulation is built on the [__ROS__](http://wiki.ros.org) (__Robot-Operating-Systems__) platform, specifically the MELODIC version to be able to have the Tiago Ros package in it. Here the guide for Tiago installation . [Tiago robot](http://wiki.ros.org/Robots/TIAGo/Tutorials/Installation/InstallUbuntuAndROS) 
+To use the aforementioned version it was necessary to work for the project on __Ubuntu 18__ which can be donwoloaded at [Download Ubuntu 18](https://releases.ubuntu.com/18.04/).
 
 The program requires the installation of the following packages and tools for the specific project before it can be launched:
 
@@ -39,5 +39,17 @@ To launch the simulation, you should have to run a .launch file called:
 
 [__assignment.launch__](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/launch/assignment.launch)
 
-Environment <img src="https://www.generationrobots.com/blog/wp-content/uploads/2016/07/gazebo-and-ros-687x319.jpg" width="20"></h2>
+Environment <img src="https://www.generationrobots.com/blog/wp-content/uploads/2016/07/gazebo-and-ros-687x319.jpg" width="80"></h2>
 --------
+
+As soon as the simulation starts, Rviz (a 3D visualizer for the Robot Operating System (ROS) framework) and Gazebo (an open-source 3D Robotics simulator) appear on the screen. We used Rviz mainly to control the right movement of the robot's arm in free space, verify the correct position of links and frames attached to the robot and to warrant the transformation matrices were the expected ones.
+As regards the Gazebo environment, on the other hand, we used it to verify the correct functioning of the code within a real simulation world.
+ROS creates the environment described in the __world__ folder, regarding to this we have built an environment called `table_and_cup_world` where the robot spawns and in front of him you can find a table with a cup on it .
+
+FOTO DEL MONDO CON ROBOT APPENA SPAWNATO (?)
+
+Implementation choices
+--------------
+First of all, the purpose of the assignment was not a simple matter to deal with and to be able to use a single script of code. We therefore decided to separate the things to do as much as possible to achieve the goal of having a more modular code.
+I
+
