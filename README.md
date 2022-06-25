@@ -68,8 +68,10 @@ Object Recognition
 Object change of coordinates to base frame
 -------
 
+
 Robot grasp
 ------
+
 
 Rqt graph
 ------
@@ -81,8 +83,14 @@ The graph can be generated using this command:
 $ rqt_graph
 ``` 
 
+FOTO RQT GRAPH
+
 
 Flowchart (?)
+-------
+
+
+Simulation
 -------
 
 
