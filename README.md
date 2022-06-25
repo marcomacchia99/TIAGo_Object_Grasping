@@ -43,6 +43,7 @@ Environment <img src="https://www.generationrobots.com/blog/wp-content/uploads/2
 --------
 
 As soon as the simulation starts, Rviz (a 3D visualizer for the Robot Operating System (ROS) framework) and Gazebo (an open-source 3D Robotics simulator) appear on the screen. We used Rviz mainly to control the right movement of the robot's arm in free space, verify the correct position of links and frames attached to the robot and to warrant the transformation matrices were the expected ones.
+
 As regards the Gazebo environment, on the other hand, we used it to verify the correct functioning of the code within a real simulation world.
 ROS creates the environment described in the __world__ folder, regarding to this we have built an environment called `table_and_cup_world` where the robot spawns and in front of him you can find a table with a cup on it .
 
