@@ -8,3 +8,30 @@ Introduction <img src= "https://cdn-icons.flaticon.com/png/512/3273/premium/3273
 
 >The purpose of this assignment is to develop a software architecture that uses opensource 3D object detection models to allow a robot manipulator to independently estimate the position 
 of a given object (through an RGB-D camera) and potentially grasp it.
+
+
+Installing and Running <img src="https://media3.giphy.com/media/LwBuVHh34nnCPWRSzB/giphy.gif?cid=ecf05e47t4j9mb7l8j1vzdc76i2453rexlnv7iye9d4wfdep&rid=giphy.gif&ct=s" width="50"></h2>
+--------
+
+The simulatotion is built on the [__ROS__](http://wiki.ros.org) (__Robot-Operating-Systems__) platform, specifically the MELODIC version.
+To be able to use the aforementioned version it was necessary to work for the project on __Ubuntu 18__ which can be donwoloaded at [Download Ubuntu 18](https://releases.ubuntu.com/18.04/).
+
+The program requires the installation of the following packages and tools for the specific project before it can be launched:
+
+For the part of the project relating to object recognition, the Mediapipe library was used, thanks to which we were able to simply obtain the identification of a certain object with respect to the robot's camera, in our case we chose the recognition of a cup.
+MediaPipe Objectron is a mobile real-time 3D object detection solution for everyday objects. It detects objects in 2D images, and estimates their poses through a machine learning (ML) model.
+We found the tutorial and the downloadable packages here:
+
+* [Mediapipe Objectron]([https://google.github.io/mediapipe/solutions/objectron])
+
+Another tool needed was the MoveIt, which is concerned to the part of moving the robot and grasping the object in the correct way,
+
+* [MoveIt]([http://docs.ros.org/en/melodic/api/moveit_tutorials/html/index.html])
+ 
+Easy to install with:
+
+```bash
+	$ sudo apt install ros-melodic-moveit
+```
+
+
