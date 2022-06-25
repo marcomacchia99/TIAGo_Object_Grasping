@@ -35,4 +35,9 @@ Easy to install with:
 	$ sudo apt install ros-melodic-moveit
 ```
 
+To launch the simulation, you should have to run a .launch file called:
+
+[__assignment.launch__](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/launch/assignment.launch)
+
+
 
