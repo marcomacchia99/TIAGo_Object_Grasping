@@ -24,7 +24,8 @@ We found the tutorial and the downloadable packages here:
 
 * [Mediapipe Objectron](https://google.github.io/mediapipe/solutions/objectron)
 
-Another tool needed was the MoveIt, which is concerned to the part of moving the robot and grasping the object in the correct way,
+Another tool needed was the one concerned to the part of moving the robot and grasping the object in the correct way,
+it was chosen to use __MoveIt__, a system that provides the necessary trajectories for the arm of a robot to put the end effector in a given place. The wrappers provide functionality for most operations that the average user will likely need, specifically setting joint or pose goals, creating motion plans, moving the robot, adding objects into the environment and attaching/detaching objects from the robot.
 
 * [MoveIt](http://docs.ros.org/en/melodic/api/moveit_tutorials/html/index.html)
  
