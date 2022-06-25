@@ -60,4 +60,16 @@ Another thing to face up with was that the Objectron tool from Mediapipe returns
 
 To achieve the final change of coordinates it was necessary to pass through the quaternions as regards the orientation of the object, and then multiply them thanks to the appropriate function `quaternion_multiply` with the corresponding component of each coordinate.
 
+Object Recognition
+------
+
+
+
+Object change of coordinates to base frame
+-------
+
+Robot grasp
+------
+
+
 
