@@ -22,11 +22,11 @@ For the part of the project relating to object recognition, the Mediapipe librar
 MediaPipe Objectron is a mobile real-time 3D object detection solution for everyday objects. It detects objects in 2D images, and estimates their poses through a machine learning (ML) model.
 We found the tutorial and the downloadable packages here:
 
-* [Mediapipe Objectron]([https://google.github.io/mediapipe/solutions/objectron])
+* [Mediapipe Objectron](https://google.github.io/mediapipe/solutions/objectron)
 
 Another tool needed was the MoveIt, which is concerned to the part of moving the robot and grasping the object in the correct way,
 
-* [MoveIt]([http://docs.ros.org/en/melodic/api/moveit_tutorials/html/index.html])
+* [MoveIt](http://docs.ros.org/en/melodic/api/moveit_tutorials/html/index.html)
  
 Easy to install with:
 
