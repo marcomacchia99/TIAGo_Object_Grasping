@@ -87,20 +87,30 @@ The compact command used is the following:
 q = R.from_matrix(results.detected_objects[0].rotation).as_quat()
 ```
 
-Finally we end up the node with the publishers to the '/sofar/target_pose/relative' and the '/sofar/target_pose/relative/stamped' for the Pose and PoseStamped topic for rispectively publish the correct relative position of the coordinate frame of the object with respect to the robot camera frame and to visualize it on RViz.
+Finally we end up the node with the publishers to the '/sofar/target_pose/relative' and the '/sofar/target_pose/relative/stamped' for the Pose and PoseStamped topic for rispectively publish the correct relative position of the coordinate frame of the object with respect to the robot camera frame and the one used to visualize it on RViz.
 
 Object change of coordinates to base frame
 -------
 
 As already mentioned above, the coordinates taken from the geometry_msgs topic are with respect to the camera frame of the Tiago robot. It is therefore necessary, through a transformation, to make a change of coordinates to pass to the reference system with respect to the base frame. To do this we used tf2 package to have the right transformation.
 
-We made up a service which is build with this structure:
+We made up the __RelToAbsolute__ service which is build with this structure:
 
 *geometry_msgs/PoseStamped relative_pose*
 *---*
 *geometry_msgs/PoseStamped absolute_pose*
 
+Then we used a specific function which gets the transform between two frames by frame ID assuming fixed frame:
 
+```python
+tfBuffer.lookup_transform('base_footprint', rel_pose.relative_pose.header.frame_id, rospy.Time())
+```
+Once the transformation was obtained, the `do_transform_point` function was used to pass from the cartesian cordinates with respect to the camera frame to the *base footprint* frame, corresponding to the base frame, the one attached to the base of the robot. 
+
+As previously done, the last thing to do is to pass into the quaternion domain to work in the format that ROS wants.
+This is simply made by the function `quaternion_multiply` which makes the change of coordinates multiplicating the two quaternions previously built with the coordinates components regarding the relative pose to the camera frame and the ones relative to the transformation.
+
+In the end we have built up the final absolute pose with respect to the base frame and returned printing it.
 
 Robot grasp
 ------
