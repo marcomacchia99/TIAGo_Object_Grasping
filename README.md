@@ -97,7 +97,9 @@ As already mentioned above, the coordinates taken from the geometry_msgs topic a
 We made up the __RelToAbsolute__ service which is build with this structure:
 
 *geometry_msgs/PoseStamped relative_pose*
+
 *---*
+
 *geometry_msgs/PoseStamped absolute_pose*
 
 Then we used a specific function which gets the transform between two frames by frame ID assuming fixed frame:
