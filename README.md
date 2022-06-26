@@ -60,7 +60,7 @@ Another thing to face up with was that the Objectron tool from Mediapipe returns
 
 To achieve the final change of coordinates it was necessary to pass through the quaternions as regards the orientation of the object, and then multiply them thanks to the appropriate function `quaternion_multiply` with the corresponding component of each coordinate.
 
-Object Recognition <img src="https://media3.giphy.com/media/plpY1udWkENMUe26kK/giphy.gif?cid=ecf05e4738d4g1yng7f307lr7ek62o0tnffd1n7dullxy73c&rid=giphy.gif&ct=s">
+Object Recognition <img src="https://media3.giphy.com/media/plpY1udWkENMUe26kK/giphy.gif?cid=ecf05e4738d4g1yng7f307lr7ek62o0tnffd1n7dullxy73c&rid=giphy.gif&ct=s"width="50"></h2>
 ------
 
 It was decided to implement a single node that provided for the recognition of the object as soon as it was displayed within the visual range of the camera of the Tiago robot. In order to achieve it firstly we imported the needed libraries for our aim, such as `ros_numpy`, `mediapipe`, `sensor_msgs` to import from the robot sensors the image seen from the camera and from `geometry_msgs` the object Pose, useful to extrapolate the position with `Point` and the orientation in quaternions. 
