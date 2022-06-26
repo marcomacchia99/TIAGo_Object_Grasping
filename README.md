@@ -62,7 +62,19 @@ To achieve the final change of coordinates it was necessary to pass through the 
 
 Object Recognition
 ------
+It was decided to implement a single node that provided for the recognition of the object as soon as it was displayed within the visual range of the camera of the Tiago robot. In order to achieve it firstly we imported the needed libraries for our aim, such as `ros_numpy`, `mediapipe`, `sensor_msgs` to import from the robot sensors the image seen from the camera and from `geometry_msgs` the object Pose, useful to extrapolate the position with `Point` and the orientation in quaternions. To obtain in the right way the rotation matrix we just pass through the __scipy__ open source library that could extract and import the orientation of the object with respect to the robot camera frame.
 
+At this point we made up a function the definition of the object takes place via mediapipe as objectron, as shown below:
+
+```python
+with mp_objectron.Objectron(
+            static_image_mode=False,
+            max_num_objects=1,
+            min_detection_confidence=0.5,
+            model_name='Cup') as objectron:
+```
+
+Then
 
 
 Object change of coordinates to base frame
