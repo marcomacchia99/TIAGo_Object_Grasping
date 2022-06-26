@@ -62,9 +62,13 @@ To achieve the final change of coordinates it was necessary to pass through the 
 
 Object Recognition
 ------
-It was decided to implement a single node that provided for the recognition of the object as soon as it was displayed within the visual range of the camera of the Tiago robot. In order to achieve it firstly we imported the needed libraries for our aim, such as `ros_numpy`, `mediapipe`, `sensor_msgs` to import from the robot sensors the image seen from the camera and from `geometry_msgs` the object Pose, useful to extrapolate the position with `Point` and the orientation in quaternions. To obtain in the right way the rotation matrix we just pass through the __scipy__ open source library that could extract and import the orientation of the object with respect to the robot camera frame.
 
-At this point we made up a function the definition of the object takes place via mediapipe as objectron, as shown below:
+It was decided to implement a single node that provided for the recognition of the object as soon as it was displayed within the visual range of the camera of the Tiago robot. In order to achieve it firstly we imported the needed libraries for our aim, such as `ros_numpy`, `mediapipe`, `sensor_msgs` to import from the robot sensors the image seen from the camera and from `geometry_msgs` the object Pose, useful to extrapolate the position with `Point` and the orientation in quaternions. 
+
+To obtain in the right way the rotation matrix we just pass through the __scipy__ open source library that could extract and import the orientation of the object with respect to the robot camera frame.
+
+At this point we made up the _recognize_ function that takes in input the image which is taken form the subscription to the `/xtion/rgb/image_raw` topic.
+Now there is the definition of the object takes place via mediapipe as objectron, as shown below:
 
 ```python
 with mp_objectron.Objectron(
@@ -74,11 +78,28 @@ with mp_objectron.Objectron(
             model_name='Cup') as objectron:
 ```
 
-Then
+Then we converted the BGR image to RGB and process it with MediaPipe Objectron with `objectron.process(ros_numpy.numpify(image))` and, if the object is detected, we printed out a loggin message for real-time feedback.
 
+Another matter was to use the quaternions to work properly in ROS with rotation matrices. For this reason scipy library was used, which provides the orientatio as a rotation matrix and then it can be convertible to the quaternion format.
+The compact command used is the following:
+
+```python
+q = R.from_matrix(results.detected_objects[0].rotation).as_quat()
+```
+
+Finally we end up the node with the publishers to the '/sofar/target_pose/relative' and the '/sofar/target_pose/relative/stamped' for the Pose and PoseStamped topic for rispectively publish the correct relative position of the coordinate frame of the object with respect to the robot camera frame and to visualize it on RViz.
 
 Object change of coordinates to base frame
 -------
+
+As already mentioned above, the coordinates taken from the geometry_msgs topic are with respect to the camera frame of the Tiago robot. It is therefore necessary, through a transformation, to make a change of coordinates to pass to the reference system with respect to the base frame. To do this we used tf2 package to have the right transformation.
+
+We made up a service which is build with this structure:
+
+*geometry_msgs/PoseStamped relative_pose*
+*---*
+*geometry_msgs/PoseStamped absolute_pose*
+
 
 
 Robot grasp
