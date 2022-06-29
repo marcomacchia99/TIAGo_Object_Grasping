@@ -123,7 +123,7 @@ For the part concerning the grasping movement, two nodes have been implemented t
 
 ### Pick client
 
-As already mentioned, this node deals with managing the movements of the robot when the simulation begins. To do this we used the SimpleActionClient library to use [PlayMotion](http://wiki.ros.org/Robots/TIAGo/Tutorials/motions/play_motion), thanks to which we were able to send a goal to reach a certain position with adequate configuration of the robot's joints and then perform a certain action; we used trajectory_msgs.msg package defines messages for defining robot trajectories, so to adjust some movements more accurately or to make the robot move specific parts, such as the head to find the object; an ApproachObject service created by us as follows:
+As already mentioned, this node deals with managing the movements of the robot when the simulation begins. To do this we used the __SimpleActionClient__ library to use [PlayMotion](http://wiki.ros.org/Robots/TIAGo/Tutorials/motions/play_motion), thanks to which we were able to send a goal to reach a certain position with adequate configuration of the robot's joints and then perform a certain action; we used trajectory_msgs.msg package that defines messages for pointing out robot trajectories, so to adjust some movements more accurately or to make the robot move specific parts, such as the head to find the object; an __ApproachObject__ service created by us as follows:
 
 *geometry_msgs/Pose pose*
 
