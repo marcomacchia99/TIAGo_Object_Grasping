@@ -119,6 +119,9 @@ In the end we have built up the final absolute pose with respect to the base fra
 Robot grasp
 ------
 
+For the part concerning the grasping movement, two nodes have been implemented that deal specifically with that: one regarding the real final approach to the object and picking it (`pickObject.py`) and one about what the robot do when the simulation starts, so the various actions before the grab and after that (`pickClient.py`).
+
+
 
 
 Rqt graph
