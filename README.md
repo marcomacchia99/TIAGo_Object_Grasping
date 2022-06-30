@@ -123,13 +123,22 @@ For the part concerning the grasping movement, two nodes have been implemented t
 
 ### Pick client
 
-As already mentioned, this node deals with managing the movements of the robot when the simulation begins. To do this we used the __SimpleActionClient__ library to use [PlayMotion](http://wiki.ros.org/Robots/TIAGo/Tutorials/motions/play_motion), thanks to which we were able to send a goal to reach a certain position with adequate configuration of the robot's joints and then perform a certain action; we used trajectory_msgs.msg package that defines messages for pointing out robot trajectories, so to adjust some movements more accurately or to make the robot move specific parts, such as the head to find the object; an __ApproachObject__ service created by us as follows:
+As already mentioned, this node deals with managing the movements of the robot when the simulation begins. To do this we used the __SimpleActionClient__ library to use [PlayMotion](http://wiki.ros.org/Robots/TIAGo/Tutorials/motions/play_motion), thanks to which we were able to send a goal to reach a certain position with an adequate configuration of the robot's joints and then perform a certain action; we used trajectory_msgs.msg package that defines messages for pointing out robot trajectories, so to adjust some movements more accurately or to make the robot move specific parts, such as the head to find the object; an __ApproachObject__ service created by us as follows:
 
 *geometry_msgs/Pose pose*
 
 *---*
 
 *bool result*
+
+
+More in specific we have implemented some functions that were necessary to make Tiago perform some actions.
+
+As soon as the node is launched, thanks to SimpleActionClient we can send a goal with __PlayMotionGoal__, using the send_goal_and_wait function.
+First we send the robot to the home position, then we managed to publish to the `JointTrajectory` topic in order to be able to change the configuration of the joints, in particular, for now, we just wnat to move the Tiago's head to find the object which is on the table. After that we subscribe to the `/sofar/target_pose/relative` to pick the relative position of the object.
+
+At this point we have defined the move_head() function that has precisely the purpose previously stated: look down for the object on the table.
+
 
 
 ### Pick object
