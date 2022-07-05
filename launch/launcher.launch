@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>  
+  <include file="$(find SOFAR_Assignment)/launch/start_simulation.launch"/>
+  <arg name="node_start_delay" default="15.0" />
+  <node pkg="SOFAR_Assignment" type="pickClient.py" name="PickClient" output="screen" required="true" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
+  <node pkg="SOFAR_Assignment" type="findObject.py" name="FindObject" output="screen" required="true"/>
+  <node pkg="SOFAR_Assignment" type="getAbsolutePose.py" name="GetAbsolutePose" output="screen" required="true"/>
+  <node pkg="SOFAR_Assignment" type="pickObject.py" name="PickObject" output="screen" required="true"/>
+</launch>  
