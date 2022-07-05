@@ -68,7 +68,7 @@
   </group>
 
   <group if="$(arg tuck_arm)">
-      <node name="tuck_arm" pkg="SOFAR_Assignment" type="tuck_arm.py" output="screen"/>
+      <node name="tuck_arm" pkg="tiago_gazebo" type="tuck_arm.py" output="screen"/>
   </group>
   <node name="image_proc" pkg="image_proc" type="image_proc" ns="xtion/rgb"/>
 </launch>
