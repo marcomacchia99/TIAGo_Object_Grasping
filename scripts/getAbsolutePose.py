@@ -81,7 +81,7 @@ def compute_absolute_pose(rel_pose):
 
     # use as reference frame base_footprint
     return_pose.absolute_pose.header.frame_id = 'base_footprint'
-    
+    print(return_pose)
     return return_pose
 
 
