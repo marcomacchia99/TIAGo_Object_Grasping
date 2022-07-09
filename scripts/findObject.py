@@ -27,8 +27,10 @@ from scipy.spatial.transform import Rotation as R
 # Define mobile real-time 3D object detection solution 
 mp_objectron = mp.solutions.objectron
 
-# Define global variables
+# publisher of target relative pose
 global pub_target_rel_pose
+
+# publisher of target relative pose stamped
 global pub_target_rel_pose_stamped
 
 
@@ -77,7 +79,7 @@ def recognize(image):
             # find orientation via quaternions
             messageTargetPose.orientation = Quaternion(q[0], q[1], q[2], q[3])
             # find position via transformation 
-            messageTargetPose.position = Point(-p[2], p[0], p[1])
+            messageTargetPose.position = Point(-p[2], -p[0], p[1])
             
             # publish messageTargetPose on target relative position 
             pub_target_rel_pose.publish(messageTargetPose)
@@ -107,5 +109,5 @@ if __name__ == '__main__':
     pub_target_rel_pose_stamped = rospy.Publisher(
         '/sofar/target_pose/relative/stamped', PoseStamped, queue_size=1)   
 
-    # start infinite loop until it receivces a shutdown  signal (Ctrl+C)
+    # start infinite loop until it receives a shutdown  signal (Ctrl+C)
     rospy.spin()

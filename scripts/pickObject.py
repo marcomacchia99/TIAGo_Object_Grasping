@@ -20,25 +20,26 @@ Service :
 """
 
 # Header
-from operator import sub
 import rospy
 from tf.transformations import *
 from tf2_geometry_msgs import *
-from geometry_msgs.msg import Pose, Quaternion, Point
-from scipy.spatial.transform import Rotation as R
+from geometry_msgs.msg import Quaternion
 import moveit_commander
-from moveit_msgs.msg import Grasp, CollisionObject
-from moveit_commander.conversions import pose_to_list
 import sys
-from std_srvs.srv import Empty, EmptyRequest
+from std_srvs.srv import Empty
 from SOFAR_Assignment.srv import ApproachObject, ApproachObjectResponse
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
-# Define global variable 
+# subscriber to target absolute pose
 global sub_target_abs_pose
+
+# robot model
 global robot
-global scene
+
+# robot move groups
 global move_group
+
+# grasp pose of the EE
 global grasp_pose
 
 
@@ -50,28 +51,31 @@ def goToObject(object_pose):
 
     Returns:
         msg: gets into correct configuration
-    """    
-    # get global variable 
+    """
+    # get global variable
     global move_group
     global grasp_pose
 
-    # define quaternion coordinate (x,y,z,w)[rad] of object found on the table
+    # define final orientation of the EE
     object_pose.pose.orientation = Quaternion(0.5, 0.5, 0.5, 0.5)
-    
+
+    # set vertical pose of the EE taking care of its shape
+    object_pose.pose.position.z += 0.1
     # save grasp pose
     grasp_pose = copy.deepcopy(object_pose.pose)
-    # define distance between EE & object 
-    grasp_pose.position.y-=0.22
 
-    # pre-grasp pose with limits
+    # define distance between EE & object
+    grasp_pose.position.y -= 0.22
+
+    # pre-grasp pose
     object_pose.pose.position.y = -0.2
-    object_pose.pose.position.z += 0.1
 
     # generate robot status
     rospy.loginfo('attempting to reach:')
     rospy.loginfo([object_pose.pose.position.x,
                    object_pose.pose.position.y, object_pose.pose.position.z])
-    # call joint group in order to reach object 
+
+    # call joint group in order to reach object
     move_group.set_pose_target(object_pose.pose)
 
     # continue to move the manipulator group to reach the desired position
@@ -90,16 +94,15 @@ def goToObject(object_pose):
 def pick(msg):
     """
         series of movements to lift and put object back on the table; 
-        using move_group of TIAGo's manipolator
+        using move_group of TIAGo's manipulator
     Args:
         msg (float) 
     """
-    # get global variable     
+    # get global variable
     global move_group
     global grasp_pose
 
-
-    #move to grasp_pose
+    # move to grasp_pose
     rospy.loginfo('move to grasp_pose...')
     move_group.set_pose_target(grasp_pose)
     move_group.go(wait=True)
@@ -121,7 +124,7 @@ def pick(msg):
     move_group.stop()
     move_group.clear_pose_targets()
 
-    #move to grasp_pose
+    # move to grasp_pose
     rospy.loginfo('move to grasp_pose...')
     move_group.set_pose_target(grasp_pose)
     move_group.go(wait=True)
@@ -140,27 +143,29 @@ def close_gripper():
         function for close gripper of TIAGo's EE when reach object 
     """
 
-    # publish gripper status on joint trajectory when TIAGo close gripper 
+    # publish gripper status on joint trajectory when TIAGo close gripper
     pub_gripper_controller = rospy.Publisher(
         '/gripper_controller/command', JointTrajectory, queue_size=1)
 
     # loop continues until the grippers close well
-    for i in  range(10):
+    for i in range(10):
         trajectory = JointTrajectory()
-        # call joint group for take object 
-        trajectory.joint_names = ['gripper_left_finger_joint', 'gripper_right_finger_joint']
+        # call joint group for take object
+        trajectory.joint_names = [
+            'gripper_left_finger_joint', 'gripper_right_finger_joint']
 
         trajectory_points = JointTrajectoryPoint()
         # define the distance to the right & left of the two gripper w.r.t the object
         trajectory_points.positions = [0.0, 0.0]
-        # time action  
+        # time action
         trajectory_points.time_from_start = rospy.Duration(1.0)
 
         trajectory.points.append(trajectory_points)
 
         pub_gripper_controller.publish(trajectory)
         # interval to start next movement
-        rospy.sleep(0.1)  
+        rospy.sleep(0.1)
+
 
 def open_gripper():
     """
@@ -171,14 +176,15 @@ def open_gripper():
         '/gripper_controller/command', JointTrajectory, queue_size=1)
 
     # loop continues until the grippers open &  object is released
-    for i in  range(10):
+    for i in range(10):
         trajectory = JointTrajectory()
-        trajectory.joint_names = ['gripper_left_finger_joint', 'gripper_right_finger_joint']
+        trajectory.joint_names = [
+            'gripper_left_finger_joint', 'gripper_right_finger_joint']
 
         trajectory_points = JointTrajectoryPoint()
         # define the distance to the right & left of the two gripper for opening
         trajectory_points.positions = [0.044, 0.044]
-        # time action  
+        # time action
         trajectory_points.time_from_start = rospy.Duration(1.0)
 
         trajectory.points.append(trajectory_points)
@@ -197,7 +203,7 @@ if __name__ == '__main__':
     # ***computation of Cartesian paths, and pick and place ***
     moveit_commander.roscpp_initialize(sys.argv)
     robot = moveit_commander.RobotCommander()
-    scene = moveit_commander.PlanningSceneInterface()
+
     # call group of joint to adjust the height of TIAGo
     move_group = moveit_commander.MoveGroupCommander('arm_torso')
 
@@ -213,5 +219,5 @@ if __name__ == '__main__':
     # call function to open gripper
     open_gripper()
 
-    # start infinite loop until it receivces a shutdown  signal (Ctrl+C)
+    # start infinite loop until it receives a shutdown signal (Ctrl+C)
     rospy.spin()

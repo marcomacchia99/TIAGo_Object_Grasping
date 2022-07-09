@@ -24,25 +24,44 @@ Service :
 """
 # Header
 import rospy
-from geometry_msgs.msg import Pose, Twist, PoseStamped, Point
+from geometry_msgs.msg import Pose, Twist, PoseStamped
 import math
 from play_motion_msgs.msg import PlayMotionAction, PlayMotionGoal
 from actionlib import SimpleActionClient
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
-from SOFAR_Assignment.srv import RelToAbsolute, RelToAbsoluteResponse
-from SOFAR_Assignment.srv import ApproachObject, ApproachObjectResponse
-from std_srvs.srv import Empty, EmptyRequest
+from SOFAR_Assignment.srv import RelToAbsolute
+from SOFAR_Assignment.srv import ApproachObject
+from std_srvs.srv import Empty
 
-# Define global variable
+
+#action client use to move robot using Playmotion
 global action_client
+
+#publisher of head joint state
 global pub_head_controller
+
+#subscriber of target relative pose
 global sub_target_rel_pose
+
+#current head movement (joint 2)
 global head_2_movement
+
+#flag to check if the robot is able to see the object
 global object_found
+
+#play motion goal
 global pmgoal
+
+#counter used to see if the robot is able to see the object in the time
 global count
+
+#measure of the displacement of the object (we want the object to be 0.1m on the left of the middle of the robot)
 global displacement
+
+#object relative pose (to camera)
 global object_rel_pose
+
+#object absolute pose
 global object_abs_pose
 
 
@@ -121,9 +140,9 @@ def get_object_relative_pose(msg):
 
     # count is a counter used to make sure that all the object fits the camera.
     # In order to ensure this, seen the object recognition frequency,
-    # the object has to be found for at least 20 times
+    # the object has to be found for at least 5 times
     count += 1
-    if count == 20:
+    if count == 5:
         object_found = True
 
 
@@ -226,6 +245,11 @@ def get_absolute_object_pose():
 
 if __name__ == '__main__':
 
+    #initialize variables
+    head_2_movement = 0
+    object_found = False
+    count = 0
+
     # ros node initialization --> Pick Client
     rospy.init_node('PickClient')
 
@@ -250,27 +274,27 @@ if __name__ == '__main__':
     sub_target_rel_pose = rospy.Subscriber(
         '/sofar/target_pose/relative', Pose, get_object_relative_pose)
 
-    # Define empty value
-    head_2_movement = 0
-    object_found = False
-    count = 0
-
+    
     # call function to move head orientation
     move_head()
 
     # service pass info to geometry_msgs/PoseStamped relative_pose
     rospy.wait_for_service('/sofar/rel_to_absolute_pose')
 
-    # definition of displacement
-    displacement = 0.1-object_abs_pose.position.y
+    # wait a second for correct object recognition
+    rospy.sleep(1)
+
+    # definition of displacement (with camera recognition bias)
+    displacement = 0.15-object_abs_pose.position.y
 
     if displacement > 0:
         # call function in case of necessary displacement
         adjust_position()
 
-    # call function to prepare pregras configuration
+    # call function to prepare pregrasp configuration
     prepare_robot()
-    # wait to compile the configuration
+
+    # wait two seconds for correct object recognition
     rospy.sleep(2)
 
     # wating for info from service --> geometry_msgs/Pose pose
@@ -298,3 +322,6 @@ if __name__ == '__main__':
     except rospy.ServiceException as e:
         rospy.logerr("Could not connect to /sofar/pick_object service")
         exit()
+
+    # start infinite loop until it receives a shutdown  signal (Ctrl+C)
+    rospy.spin()    

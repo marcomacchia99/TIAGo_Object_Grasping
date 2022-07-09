@@ -18,12 +18,13 @@ import rospy
 import tf2_ros
 from tf.transformations import *
 from tf2_geometry_msgs import *
-import ros_numpy
 from geometry_msgs.msg import Pose, Quaternion, PointStamped
 from SOFAR_Assignment.srv import RelToAbsolute, RelToAbsoluteResponse
 
-# Define global variable 
+# tf buffer
 global tfBuffer
+
+# tf listener
 global listener
 
 
@@ -40,6 +41,8 @@ def compute_absolute_pose(rel_pose):
 
     # get global variable
     global tfBuffer
+
+    # transform listener
     global listener
     
     # generate status 
@@ -96,5 +99,5 @@ if __name__ == '__main__':
     listener = tf2_ros.TransformListener(tfBuffer)
 
     rospy.loginfo("Service ready.")
-    # start infinite loop until it receivces a shutdown  signal (Ctrl+C)
+    # start infinite loop until it receives a shutdown  signal (Ctrl+C)
     rospy.spin()
