@@ -60,13 +60,13 @@ def goToObject(object_pose):
     object_pose.pose.orientation = Quaternion(0.5, 0.5, 0.5, 0.5)
 
     # set vertical pose of the EE taking care of its shape
-    object_pose.pose.position.z += 0.1
+    object_pose.pose.position.z += rospy.get_param('z_axis_offset')
 
     # save grasp pose
     grasp_pose = copy.deepcopy(object_pose.pose)
 
     # define distance between EE & object
-    grasp_pose.position.y -= 0.27
+    grasp_pose.position.y -= rospy.get_param('y_axis_offset')
 
     # pre-grasp pose
     object_pose.pose.position.y = -0.2
@@ -115,7 +115,7 @@ def pick(msg):
 
     # define post_grasp_pose
     post_grasp_pose = copy.deepcopy(grasp_pose)
-    post_grasp_pose.position.z += 0.3
+    post_grasp_pose.position.z += rospy.get_param('grasp_height')
 
     # move to post_grasp_pose
     rospy.loginfo('PickObject - move to post_grasp_pose...')

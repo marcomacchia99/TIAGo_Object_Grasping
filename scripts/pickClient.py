@@ -154,7 +154,7 @@ def get_object_relative_pose(msg):
     # In order to ensure this, seen the object recognition frequency,
     # the object has to be found for at least 4 times
     count += 1
-    if count == 4:
+    if count == rospy.get_param('seen_object_count'):
         object_found = True
 
 
@@ -200,7 +200,7 @@ def adjust_position():
 
     # Define angular velocity to turn with w.r.t z axis
     # prepare to move to the sides of the table
-    for i in range(21):
+    for i in range(rospy.get_param('right_rotation_index')):
         velocity.angular.z = -math.pi/4
         pub_vel.publish(velocity)
         rospy.sleep(0.1)
@@ -221,7 +221,7 @@ def adjust_position():
 
     # Define angular velocity to turn with w.r.t z axis
     # reverse movement to get to the table
-    for i in range(19):
+    for i in range(rospy.get_param('left_rotation_index')):
         velocity.angular.z = math.pi/4
         pub_vel.publish(velocity)
         rospy.sleep(0.1)

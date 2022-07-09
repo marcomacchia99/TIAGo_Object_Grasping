@@ -11,6 +11,9 @@
   <!-- Load definition of pregrasp motion into play_motion namespace -->
   <rosparam command="load" file="$(find SOFAR_Assignment)/config/pick_motions.yaml" /> 
 
+  <!-- load simulation parameters -->
+  <rosparam command="load" file="$(find SOFAR_Assignment)/config/simulation_param.yaml" /> 
+
   <!-- Gazebo simulation -->
   <include file="$(find SOFAR_Assignment)/launch/tiago_gazebo.launch">
     <arg name="robot"      value="$(arg robot)"/>
