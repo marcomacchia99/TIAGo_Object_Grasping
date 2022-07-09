@@ -40,7 +40,7 @@ Also, in order to correctly run the simulation, you have to install the followin
 * ros-numpy
 * scipy 
 
-To launch the simulation, you should run this .launch file:
+Finally, to launch the simulation, you should run this .launch file:
 
 ```bash
 	$ roslaunch SOFAR_Assignment launcher.launch
