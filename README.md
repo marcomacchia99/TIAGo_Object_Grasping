@@ -58,7 +58,7 @@ ROS creates the scenario described in the __world__ folder, regarding to this we
 
 <p align="center">
     
-<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/main/assets/Thiago_spawn.jpg" width="600" height="350">
+<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/Tiago_spawn.jpg" width="600" height="350">
     
 </p>
 
