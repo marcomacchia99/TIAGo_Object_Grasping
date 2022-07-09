@@ -53,7 +53,7 @@ Environment
 As soon as the simulation starts, Gazebo (an open-source 3D Robotics simulator) appears on the screen.
 
 We used the Gazebo environment to control the right movement of the robot's joints and to verify the correct functioning of the code within a real simulation world.
-ROS creates the scenario described in the __world__ folder, regarding to this we have built an environment called `table_and_cup_world` where the robot spawns and in front of him you can find a table with a cup on it.
+ROS creates the scenario described in the __world__ folder, regarding to this we have built an environment called `table_and_cup.world` where the robot spawns and in front of him you can find a table with a cup on it.
 
 
 <p align="center">
