@@ -3,14 +3,14 @@ Tiago Robot simulation using ROS, Rviz and Gazebo.
 ================================
 
 
-Introduction <img src= "https://cdn-icons.flaticon.com/png/512/3273/premium/3273644.png?token=exp=1656069884~hmac=832ed0f5cad904d64c10fc23759c2b11" width=40 height=40>
+Introduction
 ------------
 
 >The purpose of this assignment is to develop a software architecture that uses opensource 3D object detection models to allow a robot manipulator to independently estimate the position of a given object (through an RGB-D camera) and potentially grasp it.
 In order to verify the simulation in a real environment, given the availability of the Tiago robot in the laboratory, the latter mentioned was selected to carry out the software simulation on Gazebo.
 
 
-Installing and Running <img src="https://media3.giphy.com/media/LwBuVHh34nnCPWRSzB/giphy.gif?cid=ecf05e47t4j9mb7l8j1vzdc76i2453rexlnv7iye9d4wfdep&rid=giphy.gif&ct=s" width="50"></h2>
+Installing and Running
 --------
 
 The simulation is built on the [__ROS__](http://wiki.ros.org) (__Robot-Operating-Systems__) platform, specifically the MELODIC version to be able to have the Tiago Ros package in it. Here the guide for Tiago installation [Tiago robot](http://wiki.ros.org/Robots/TIAGo/Tutorials/Installation/InstallUbuntuAndROS).
@@ -42,7 +42,7 @@ To launch the simulation, you should have to run a .launch file called:
 
 ANVHE DA INSTALL PYTHON3-ROSPKG, ROS-NUMPY con sudo apt-get install ros-melodic-ros-numpy, pip3 install scipy.
 
-Environment <img src="https://www.generationrobots.com/blog/wp-content/uploads/2016/07/gazebo-and-ros-687x319.jpg" width="80"></h2>
+Environment
 --------
 
 As soon as the simulation starts, Rviz (a 3D visualizer for the Robot Operating System (ROS) framework) and Gazebo (an open-source 3D Robotics simulator) appear on the screen. We used Rviz mainly to control the right movement of the robot's arm in free space, verify the correct position of links and frames attached to the robot and to warrant the transformation matrices were the expected ones.
@@ -63,7 +63,7 @@ Another thing to face up with was that the Objectron tool from Mediapipe returns
 
 To achieve the final change of coordinates it was necessary to pass through the quaternions as regards the orientation of the object, and then multiply them thanks to the appropriate function `quaternion_multiply` with the corresponding component of each coordinate.
 
-Object Recognition <img src="https://media3.giphy.com/media/plpY1udWkENMUe26kK/giphy.gif?cid=ecf05e4738d4g1yng7f307lr7ek62o0tnffd1n7dullxy73c&rid=giphy.gif&ct=s" width="50"></h2>
+Object Recognition
 ------
 
 It was decided to implement a single node that provided the recognition of the object as soon as it was displayed within the visual range of the camera of the Tiago robot. In order to achieve it, firstly we imported the needed libraries for our aim, such as `ros_numpy`, `mediapipe`, `sensor_msgs` to import from the robot sensors the image seen from the camera and from `geometry_msgs` the object Pose, useful to extrapolate the position with `Point` and the orientation in quaternions. 
