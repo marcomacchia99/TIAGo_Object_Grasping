@@ -26,7 +26,7 @@ from tf2_geometry_msgs import *
 from geometry_msgs.msg import Quaternion
 import moveit_commander
 import sys
-from std_srvs.srv import Empty
+from std_srvs.srv import Empty, EmptyResponse
 from SOFAR_Assignment.srv import ApproachObject, ApproachObjectResponse
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
@@ -47,7 +47,7 @@ def goToObject(object_pose):
     """
         Puts the manipulator in the right position to take the object
     Args:
-        object_pose (msg): get object position information in quaternion coordinate
+        object_pose (msg): get object pose
 
     Returns:
         msg: gets into correct configuration
@@ -71,9 +71,7 @@ def goToObject(object_pose):
     object_pose.pose.position.y = -0.2
 
     # generate robot status
-    rospy.loginfo('attempting to reach:')
-    rospy.loginfo([object_pose.pose.position.x,
-                   object_pose.pose.position.y, object_pose.pose.position.z])
+    rospy.loginfo('PickObject - attempting to reach pre grasp pose')
 
     # call joint group in order to reach object
     move_group.set_pose_target(object_pose.pose)
@@ -96,20 +94,20 @@ def pick(msg):
         series of movements to lift and put object back on the table; 
         using move_group of TIAGo's manipulator
     Args:
-        msg (float) 
+        msg (Empty) 
     """
     # get global variable
     global move_group
     global grasp_pose
 
     # move to grasp_pose
-    rospy.loginfo('move to grasp_pose...')
+    rospy.loginfo('PickObject - move to grasp_pose...')
     move_group.set_pose_target(grasp_pose)
     move_group.go(wait=True)
     move_group.stop()
     move_group.clear_pose_targets()
 
-    rospy.loginfo('closing gripper...')
+    rospy.loginfo('PickObject - closing gripper...')
     close_gripper()
     rospy.sleep(1)
 
@@ -118,24 +116,27 @@ def pick(msg):
     post_grasp_pose.position.z += 0.3
 
     # move to post_grasp_pose
-    rospy.loginfo('move to post_grasp_pose...')
+    rospy.loginfo('PickObject - move to post_grasp_pose...')
     move_group.set_pose_target(post_grasp_pose)
     move_group.go(wait=True)
     move_group.stop()
     move_group.clear_pose_targets()
 
     # move to grasp_pose
-    rospy.loginfo('move to grasp_pose...')
+    rospy.loginfo('PickObject - move to grasp_pose...')
     move_group.set_pose_target(grasp_pose)
     move_group.go(wait=True)
     move_group.stop()
     move_group.clear_pose_targets()
 
-    rospy.loginfo('opening gripper...')
+    rospy.loginfo('PickObject - opening gripper...')
     open_gripper()
     rospy.sleep(1)
 
-    rospy.loginfo('Done.')
+    rospy.loginfo('PickObject - Done.')
+
+    response  = EmptyResponse()
+    return response
 
 
 def close_gripper():
@@ -214,10 +215,10 @@ if __name__ == '__main__':
     grasp_object_service = rospy.Service(
         "/sofar/pick_object", Empty, pick)
 
-    rospy.loginfo("Service ready.")
+    rospy.loginfo("PickObject - Services ready.")
 
     # call function to open gripper
     open_gripper()
 
-    # start infinite loop until it receives a shutdown signal (Ctrl+C)
+    # start infinite loop until it receives a shutdown signal
     rospy.spin()

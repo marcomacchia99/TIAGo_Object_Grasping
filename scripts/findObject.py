@@ -13,7 +13,7 @@ Publishes to:
     /sofar/target_pose/relative/stamped
 
 :Find Object node description:
-    Allows TIAGo to find relative position of the object (cup) in Gazebo's 3d enviorment.
+    Allows TIAGo to find relative position of the object in Gazebo's 3d enviorment.
 """
 
 # Header 
@@ -49,12 +49,15 @@ def recognize(image):
     global pub_target_rel_pose_stamped
 
 
-    # Define static image model carried from media pipe objectron
+    # Use objectron to recognize the object
     with mp_objectron.Objectron(
+
             static_image_mode=False,
             max_num_objects=1,
+
             # confidence interval
             min_detection_confidence=0.5,
+
             # define object 
             model_name='Cup') as objectron:
         
@@ -62,11 +65,13 @@ def recognize(image):
         results = objectron.process(ros_numpy.numpify(image))
 
         if results.detected_objects:
+
             # generate status 
-            rospy.loginfo("Object found")
+            rospy.loginfo("FindObject - Object found")
 
             # a representation of pose in free space, composed of position & orientation. 
             messageTargetPose = Pose()
+
             # if object detected substitute coordinate use result to do translation 
             # translation coordinate (z,x,y)[meter]
             p = results.detected_objects[0].translation
@@ -98,16 +103,16 @@ if __name__ == '__main__':
     # ros node initialization --> Find Object 
     rospy.init_node('FindObject')
 
-    # subscribe to rgb camera to take image information
+    # subscribe to rgb camera to take image view
     sub_camera = rospy.Subscriber('/xtion/rgb/image_raw', Image, recognize)
 
-    # publishe to traget_pose/relative positione of object detected 
+    # publish to traget_pose/relative position of object detected 
     pub_target_rel_pose = rospy.Publisher(
         '/sofar/target_pose/relative', Pose, queue_size=1)
 
-    # publishe to traget_pose/relative/stamped to print positione of object detected 
+    # publish to traget_pose/relative/stamped to print position of object detected 
     pub_target_rel_pose_stamped = rospy.Publisher(
         '/sofar/target_pose/relative/stamped', PoseStamped, queue_size=1)   
 
-    # start infinite loop until it receives a shutdown  signal (Ctrl+C)
+    # start infinite loop until it receives a shutdown signal
     rospy.spin()
