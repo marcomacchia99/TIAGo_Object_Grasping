@@ -34,39 +34,50 @@ Easy to install with:
 ```bash
 	$ sudo apt install ros-melodic-moveit
 ```
+Also, in order to correctly run the simulation, you have to install the following packages:
 
-To launch the simulation, you should have to run a .launch file called:
+* python3-rospkg
+* ros-numpy
+* scipy 
 
-[__assignment.launch__](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/launch/assignment.launch)
+Finally, to launch the simulation, you should run this .launch file:
 
+```bash
+	$ roslaunch SOFAR_Assignment launcher.launch
+```
 
-ANVHE DA INSTALL PYTHON3-ROSPKG, ROS-NUMPY con sudo apt-get install ros-melodic-ros-numpy, pip3 install scipy.
 
 Environment
 --------
 
-As soon as the simulation starts, Rviz (a 3D visualizer for the Robot Operating System (ROS) framework) and Gazebo (an open-source 3D Robotics simulator) appear on the screen. We used Rviz mainly to control the right movement of the robot's arm in free space, verify the correct position of links and frames attached to the robot and to warrant the transformation matrices were the expected ones.
+As soon as the simulation starts, Gazebo (an open-source 3D Robotics simulator) appears on the screen.
 
-As regards the Gazebo environment, on the other hand, we used it to verify the correct functioning of the code within a real simulation world.
-ROS creates the environment described in the __world__ folder, regarding to this we have built an environment called `table_and_cup_world` where the robot spawns and in front of him you can find a table with a cup on it .
+We used the Gazebo environment to control the right movement of the robot's joints and to verify the correct functioning of the code within a real simulation world.
+ROS creates the scenario described in the __world__ folder, regarding to this we have built an environment called `table_and_cup.world` where the robot spawns and in front of him you can find a table with a cup on it.
 
-FOTO DEL MONDO CON ROBOT APPENA SPAWNATO (?)
+
+<p align="center">
+    
+<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/Tiago_spawn.jpg" width="600" >
+    
+</p>
+
 
 Implementation choices
 --------------
-First of all, the purpose of the assignment was not a simple matter to deal with and we thought it was not the best idea to use a single script of code. We therefore decided to separate the things to do as much as possible to achieve the goal of having a more modular code.
+First of all, the purpose of the assignment was not a simple matter to deal with and we thought it was not the best idea to use a single script of code. We therefore decided to separate the things in order to achieve the goal of having a more modular code.
 
 Then, the approach used was the more general that we could to better obtain as a final result, a robot which can adjust its position depending on the object 
 coordinates in the space (however the object must remain in the range of the robot camera).
 
-Another thing to face up with was that the Objectron tool from Mediapipe returns the frames and coordinates of the robot camera frame, more in specific the /xtion/rgb topic, so we had to dedicate a whole node to extract the relative pose of the object with respect to the camera and with the correct transformations, thanks to tf package functions, have the pose of the object with respect to the base frame (base_footprint) of the robot.
+Another thing to face up with was that the Objectron tool from Mediapipe returns the frames and coordinates of the robot camera frame, more in specific the xtion_rgb_frame, so we had to dedicate a whole node to extract the relative pose of the object with respect to the camera and with the correct transformations, thanks to tf package functions, have the pose of the object with respect to the base frame (base_footprint) of the robot.
 
 To achieve the final change of coordinates it was necessary to pass through the quaternions as regards the orientation of the object, and then multiply them thanks to the appropriate function `quaternion_multiply` with the corresponding component of each coordinate.
 
 Object Recognition
 ------
 
-It was decided to implement a single node that provided the recognition of the object as soon as it was displayed within the visual range of the camera of the Tiago robot. In order to achieve it, firstly we imported the needed libraries for our aim, such as `ros_numpy`, `mediapipe`, `sensor_msgs` to import from the robot sensors the image seen from the camera and from `geometry_msgs` the object Pose, useful to extrapolate the position with `Point` and the orientation in quaternions. 
+It was decided to implement a single node that provided the recognition of an object as soon as it was displayed within the visual range of the camera of the Tiago robot. In order to achieve it, firstly we imported the needed libraries for our aim, such as `ros_numpy`, `mediapipe`, `sensor_msgs` to import from the robot sensors the image seen from the camera and from `geometry_msgs` the object Pose, useful to extrapolate the position with `Point` and the orientation in quaternions. 
 
 To obtain in the right way the rotation matrix we just pass through the __scipy__ open source library that could extract and import the orientation of the object with respect to the robot camera frame.
 
@@ -90,12 +101,12 @@ The compact command used is the following:
 q = R.from_matrix(results.detected_objects[0].rotation).as_quat()
 ```
 
-Finally we ended up the node with the publishers to the '/sofar/target_pose/relative' and the '/sofar/target_pose/relative/stamped' for the Pose and PoseStamped topic for rispectively publish the correct relative position of the coordinate frame of the object with respect to the robot camera frame and the one used to visualize it on RViz.
+Finally we ended up the node with the publishers to the '/sofar/target_pose/relative' and the '/sofar/target_pose/relative/stamped' for the Pose and PoseStamped topic for rispectively publish the correct relative position of the coordinate frame of the object with respect to the robot camera frame and the other was used to visualize it on RViz to have an extra feedback.
 
 Object change of coordinates to base frame
 -------
 
-As already mentioned above, the coordinates taken from the geometry_msgs topic are with respect to the camera frame of the Tiago robot. It is therefore necessary, through a transformation, to make a change of coordinates to pass to the reference system with respect to the base frame. To do this we used tf2 package to have the right transformation.
+As already mentioned, the coordinates taken from the geometry_msgs topic are with respect to the camera frame of the Tiago robot. It is therefore necessary, through a transformation, to make a change of coordinates to pass to the reference system with respect to the base frame. To do this we used tf2 package to have the right transformation.
 
 We made up the __RelToAbsolute__ service which is build with this structure:
 
@@ -112,6 +123,7 @@ Then we used a specific function which gets the transform between two frames by 
 ```python
 tfBuffer.lookup_transform('base_footprint', rel_pose.relative_pose.header.frame_id, rospy.Time())
 ```
+
 Once the transformation was obtained, the `do_transform_point` function was used to pass from the cartesian cordinates with respect to the camera frame to the *base footprint* frame, corresponding to the base frame, the one attached to the base of the robot. 
 
 As previously done, the last thing to do is to pass into the quaternion domain to work in the format that ROS wants.
