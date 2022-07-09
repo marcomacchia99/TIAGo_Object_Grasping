@@ -34,13 +34,18 @@ Easy to install with:
 ```bash
 	$ sudo apt install ros-melodic-moveit
 ```
+Also, in order to correctly run the simulation, you have to install the following packages:
 
-To launch the simulation, you should have to run a .launch file called:
+* python3-rospkg
+* ros-numpy
+* scipy 
 
-[__assignment.launch__](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/launch/assignment.launch)
+To launch the simulation, you should run this .launch file:
 
+```bash
+	$ roslaunch SOFAR_Assignment launcher.launch
+```
 
-ANVHE DA INSTALL PYTHON3-ROSPKG, ROS-NUMPY con sudo apt-get install ros-melodic-ros-numpy, pip3 install scipy.
 
 Environment
 --------
