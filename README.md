@@ -181,11 +181,9 @@ $ rqt_graph
 UML diagram
 -------
 
-<p align="center">
+![alt text](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/UML%20diagram.png)
     
-<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/UML%20diagram.png" width="600" >
-    
-</p>
+
 
 
 Simulation
