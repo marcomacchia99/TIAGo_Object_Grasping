@@ -172,7 +172,7 @@ $ rqt_graph
 
 <p align="center">
     
-<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/rosgraph.png" width="800" height="300" >
+<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/rosgraph.png" width="1000" >
     
 </p>
 
