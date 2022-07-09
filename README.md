@@ -65,7 +65,7 @@ ROS creates the scenario described in the __world__ folder, regarding to this we
 
 Implementation choices
 --------------
-First of all, the purpose of the assignment was not a simple matter to deal with and we thought it was not the best idea to use a single script of code. We therefore decided to separate the things to do as much as possible to achieve the goal of having a more modular code.
+First of all, the purpose of the assignment was not a simple matter to deal with and we thought it was not the best idea to use a single script of code. We therefore decided to separate the things in order to achieve the goal of having a more modular code.
 
 Then, the approach used was the more general that we could to better obtain as a final result, a robot which can adjust its position depending on the object 
 coordinates in the space (however the object must remain in the range of the robot camera).
