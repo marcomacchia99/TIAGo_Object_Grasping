@@ -2,7 +2,7 @@
 """
 .. module:: getAbsolutePose
 :platform: Linux
-:synopsis: Python module for get absolute position of object (cup)
+:synopsis: Python module for get absolute position of object 
 :moduleauthor: M.Macchia S.Pedrazzi M.Haji Hosseini
 
 Service :
@@ -46,7 +46,7 @@ def compute_absolute_pose(rel_pose):
     global listener
     
     # generate status 
-    rospy.loginfo('New request received')
+    rospy.loginfo('GetAbsolutePose - New request received')
 
     # relative pose transformation between xtion_rgb_frame & base_footprint
     trans_base_rel = tfBuffer.lookup_transform('base_footprint',
@@ -98,6 +98,6 @@ if __name__ == '__main__':
     # constructor for transform listener
     listener = tf2_ros.TransformListener(tfBuffer)
 
-    rospy.loginfo("Service ready.")
-    # start infinite loop until it receives a shutdown  signal (Ctrl+C)
+    rospy.loginfo("GetAbsolutePose - Service ready.")
+    # start infinite loop until it receives a shutdown  signal
     rospy.spin()
