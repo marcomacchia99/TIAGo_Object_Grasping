@@ -169,11 +169,11 @@ The graph can be generated using this command:
 $ rqt_graph
 ``` 
 
-<p align="center">
+
     
-<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/rosgraph.png" width="600" >
+![alt text](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/rosgraph.png)
     
-</p>
+
 
 
 
