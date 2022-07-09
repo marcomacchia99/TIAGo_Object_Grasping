@@ -50,12 +50,18 @@ Finally, to launch the simulation, you should run this .launch file:
 Environment
 --------
 
-As soon as the simulation starts, Rviz (a 3D visualizer for the Robot Operating System (ROS) framework) and Gazebo (an open-source 3D Robotics simulator) appear on the screen. We used Rviz mainly to control the right movement of the robot's arm in free space, verify the correct position of links and frames attached to the robot and to warrant the transformation matrices were the expected ones.
+As soon as the simulation starts, Gazebo (an open-source 3D Robotics simulator) appears on the screen.
 
-As regards the Gazebo environment, on the other hand, we used it to verify the correct functioning of the code within a real simulation world.
-ROS creates the environment described in the __world__ folder, regarding to this we have built an environment called `table_and_cup_world` where the robot spawns and in front of him you can find a table with a cup on it .
+We used the Gazebo environment to control the right movement of the robot's joints and to verify the correct functioning of the code within a real simulation world.
+ROS creates the scenario described in the __world__ folder, regarding to this we have built an environment called `table_and_cup_world` where the robot spawns and in front of him you can find a table with a cup on it.
 
-FOTO DEL MONDO CON ROBOT APPENA SPAWNATO (?)
+
+<p align="center">
+    
+<img src="https://github.com/macromacchia99/SOFAR_Assignment/blob/main/assets/Thiago_spawn.png" width="600" height="350">
+    
+</p>
+
 
 Implementation choices
 --------------
