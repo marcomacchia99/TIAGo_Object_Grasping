@@ -170,8 +170,12 @@ $ rqt_graph
 ``` 
 
 
+<p align="center">
     
-![alt text](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/rosgraph.png)
+<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/rosgraph.png" width="600" >
+    
+</p>
+
     
 
 
@@ -181,7 +185,11 @@ $ rqt_graph
 UML diagram
 -------
 
-![alt text](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/UML%20diagram.png)
+<p align="center">
+    
+<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/UML%20diagram.png" width="600" >
+    
+</p>
     
 
 
