@@ -152,9 +152,9 @@ def get_object_relative_pose(msg):
 
     # count is a counter used to make sure that all the object fits the camera.
     # In order to ensure this, seen the object recognition frequency,
-    # the object has to be found for at least 5 times
+    # the object has to be found for at least 4 times
     count += 1
-    if count == 5:
+    if count == 4:
         object_found = True
 
 
@@ -221,7 +221,7 @@ def adjust_position():
 
     # Define angular velocity to turn with w.r.t z axis
     # reverse movement to get to the table
-    for i in range(20):
+    for i in range(19):
         velocity.angular.z = math.pi/4
         pub_vel.publish(velocity)
         rospy.sleep(0.1)
@@ -274,10 +274,10 @@ def go_to_final_position():
 
     # define Play motion configuration
     pmgoal = PlayMotionGoal()
-    pmgoal.motion_name = 'postrelease'
+    pmgoal.motion_name = 'post_release'
     pmgoal.skip_planning = False
 
-    # send play motion goal --> postrelease configuration & wait until position is reached
+    # send play motion goal --> post_release configuration & wait until position is reached
     action_client.send_goal_and_wait(pmgoal)
 
     rospy.loginfo("PickClient - Done.")        
@@ -327,10 +327,10 @@ if __name__ == '__main__':
     rospy.sleep(1)
 
     # definition of displacement (with camera recognition bias)
-    displacement = 0.15-object_abs_pose.position.y
+    displacement = 0.1-object_abs_pose.position.y
 
     if displacement > 0:
-        # call function in case of necessary displacement
+        # call function in case of necessary adjustment
         adjust_position()
 
     # call function to prepare pregrasp configuration

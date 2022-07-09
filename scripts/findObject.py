@@ -13,7 +13,7 @@ Publishes to:
     /sofar/target_pose/relative/stamped
 
 :Find Object node description:
-    Allows TIAGo to find relative position of the object in Gazebo's 3d enviorment.
+    Allows TIAGo to find relative position of an object in the space.
 """
 
 # Header 
@@ -36,13 +36,11 @@ global pub_target_rel_pose_stamped
 
 def recognize(image):
     """
-        recognize function for find the object in the image taken from media pipe and replace 
-        the coordinates of the object inside the Pose matrix to find position and orientation
+        recognize function that finds the object in the image taken from media pipe and gives the
+        object pose (position and orientation)
 
     Args:
-        image (msg): use available media pipe information uploaded
-    Returns:
-        msg(float): return relative position of object respect xtion_rgb_frame 
+        image (msg): image taken from robot camera
     """
     # get global variables 
     global pub_target_rel_pose
@@ -61,7 +59,7 @@ def recognize(image):
             # define object 
             model_name='Cup') as objectron:
         
-        # Get results as image
+        # Get results
         results = objectron.process(ros_numpy.numpify(image))
 
         if results.detected_objects:
@@ -76,20 +74,21 @@ def recognize(image):
             # translation coordinate (z,x,y)[meter]
             p = results.detected_objects[0].translation
 
-            # if object detected substitute coordinate use result to do rotation as quaternions
+            # if object detected take the orientation of the object
             # *** Rotation in 3 dimensions can be represented using unit norm quaternions***.
             # quaternion coordinate (x,y,z,w) [rad]
             q = R.from_matrix(results.detected_objects[0].rotation).as_quat()
 
-            # find orientation via quaternions
+            # define orientation via quaternions
             messageTargetPose.orientation = Quaternion(q[0], q[1], q[2], q[3])
-            # find position via transformation 
+
+            # define position via transformation (converting the axes from mediapipe reference to TIAGo reference)
             messageTargetPose.position = Point(-p[2], -p[0], p[1])
             
             # publish messageTargetPose on target relative position 
             pub_target_rel_pose.publish(messageTargetPose)
             
-            # substitute in pose_stamped, a Pose with reference coordinate frame & timestamp
+            # Create a PoseStamped message
             pose_stamped = PoseStamped(pose = messageTargetPose)
             # pose_stamped use as frame_id --> frame of rgd camera 
             pose_stamped.header.frame_id='xtion_rgb_frame'
@@ -106,11 +105,11 @@ if __name__ == '__main__':
     # subscribe to rgb camera to take image view
     sub_camera = rospy.Subscriber('/xtion/rgb/image_raw', Image, recognize)
 
-    # publish to traget_pose/relative position of object detected 
+    # publish to target_pose/relative position of object detected 
     pub_target_rel_pose = rospy.Publisher(
         '/sofar/target_pose/relative', Pose, queue_size=1)
 
-    # publish to traget_pose/relative/stamped to print position of object detected 
+    # publish to target_pose/relative/stamped to display position of object detected in RVIZ
     pub_target_rel_pose_stamped = rospy.Publisher(
         '/sofar/target_pose/relative/stamped', PoseStamped, queue_size=1)   
 
