@@ -2,7 +2,18 @@
 <sdf version='1.6'>
   <model name='cup_blue'>
     <link name='link_13'>
-       <visual name='visual'>
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <visual name='visual'>
         <geometry>
           <mesh>
             <uri>model://cup_blue/meshes/cup1.dae</uri>
