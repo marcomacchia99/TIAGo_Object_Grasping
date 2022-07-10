@@ -269,7 +269,7 @@ Here it is shown the UML diagram to better understand the whole system.
 Simulation
 -------
 
-A small video to visualize all the actions made by Tiago during the simulation.
+A small video to visualize to better visualize Tiago's whole procedure to take the cup during the simulation.
 
 
 Conclusions and possible future improvements
