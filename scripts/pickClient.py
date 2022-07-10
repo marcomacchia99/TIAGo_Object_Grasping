@@ -15,8 +15,8 @@ Service :
     '/sofar/approach_object'      --> pass trajectory to reach object to other node 
     '/sofar/pick_object'          --> pass command to pick up object to other node 
 
-:Pick Clinet node description:
-   1. TIAGo is placed at home configuaration
+:Pick Client node description:
+   1. TIAGo is placed at home configuration
    2. Moves its head until object is found
    3. Takes information relating to object position 
    4. In case of a found displacement between the object and TIAGo, it moves to find the best position to take the object 
