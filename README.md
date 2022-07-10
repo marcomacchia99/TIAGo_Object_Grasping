@@ -270,7 +270,9 @@ Here it is shown the UML diagram to better understand the whole system.
 Simulation
 -------
 
-A small video to visualize to better visualize Tiago's whole procedure to pick the cup during the simulation.
+A small video to better visualize Tiago's whole procedure to pick the cup during the simulation.
+
+[video](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/video.mp4)
 
 
 Conclusions and possible future improvements
