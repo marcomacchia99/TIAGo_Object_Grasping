@@ -203,7 +203,6 @@ A publisher was used to publish gripper status on joint trajectory when TIAGo cl
 ```python
 rospy.Publisher('/gripper_controller/command', JointTrajectory, queue_size=1)
 ```
-(here for the close_gripper() function but the same of open)
 
 It was necessary to make a loop to wait for the closing or opening operation to take place and to be completed.
 We also needed to use `JointTrajectory()` to set the joint group for taking the object and `JointTrajectoryPoint()` to set the total aperture or the clamp of the grippers.
@@ -271,7 +270,7 @@ Here it is shown the UML diagram to better understand the whole system.
 Simulation
 -------
 
-A small video to visualize to better visualize Tiago's whole procedure to take the cup during the simulation.
+A small video to visualize to better visualize Tiago's whole procedure to pick the cup during the simulation.
 
 
 Conclusions and possible future improvements
