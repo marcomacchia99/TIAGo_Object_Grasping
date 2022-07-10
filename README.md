@@ -272,7 +272,9 @@ Simulation
 
 A small video to better visualize Tiago's whole procedure to pick the cup during the simulation.
 
-[video](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/video.mp4)
+https://user-images.githubusercontent.com/62328611/178161099-6d67033e-cf58-4e24-be22-ff232384f802.mp4
+
+
 
 
 Conclusions and possible future improvements
