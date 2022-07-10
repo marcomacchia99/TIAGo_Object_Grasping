@@ -211,6 +211,8 @@ $ rqt_graph
 UML diagram
 -------
 
+Here it is shown the UML diagram to better understand the whole system.
+
 <p align="center">
     
 <img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/UML%20diagram.png" width="700" >
@@ -223,8 +225,20 @@ UML diagram
 Simulation
 -------
 
+A small video to visualize all the actions made by Tiago during the simulation.
+
 
 Conclusions and possible future improvements
 --------------
+
+The assignment carried out was challenging because we had to faced up a problem with different aspects to deal with.
+Gazebo was an environment which we have already been able to test its functionality in other course, together with ROS1. But working with the Tiago robot and involving other tools such as Mediapipe for the recognition of objects in a world created by us, as well as MoveIt to be able to make the movements in the right way and to reach certain positions for the robot was not easy.
+
+Certainly one of the most difficult parts was to understand which parameters it was necessary to change according to the system where the simulation was running in order to have as much as possible a clear and clean movement of the robot arm, therefore without collision with objects and without displacements in the measurements that the robot reported.
+
+We think that a possible improvement to continue our work could be, for instance, to allow Tiago to be able to evaluate and make several actions among a wider range of possible movements to get to the object differently and faster based on where it spawns.
+
+Another aspect that can be evaluated to improve the flexibility of the code could be to implement a system that does the same things but with immediate portability for other robot models as well.
+
 
 
