@@ -103,7 +103,7 @@ The compact command used is the following:
 q = R.from_matrix(results.detected_objects[0].rotation).as_quat()
 ```
 
-Finally we ended up the node with the publishers to the '/sofar/target_pose/relative' and the '/sofar/target_pose/relative/stamped' for the Pose and PoseStamped topic for rispectively publish the correct relative position of the coordinate frame of the object with respect to the robot camera frame and the other was used to visualize it on RViz to have an extra feedback.
+Finally we ended up the node with the publishers to the '/sofar/target_pose/relative' and the '/sofar/target_pose/relative/stamped' for the Pose and PoseStamped topic for respectively publish the correct relative position of the coordinate frame of the object with respect to the robot camera frame and the other was used to visualize it on RViz to have an extra feedback.
 
 Object change of coordinates to base frame
 -------
@@ -140,7 +140,7 @@ For the part concerning the grasping movement, two nodes have been implemented t
 
 ### Pick client
 
-As already mentioned, this node deals with managing what the robot has to do throughout the simulation. To do this we used the __SimpleActionClient__ library to use [PlayMotion](http://wiki.ros.org/Robots/TIAGo/Tutorials/motions/play_motion), thanks to which we were able to send a goal to reach a certain position with an adequate configuration of the robot's joints and then perform a certain action; we used trajectory_msgs.msg package that defines messages for pointing out robot trajectories, so to adjust some movements more accurately or to make the robot move specific parts, such as the head to find the object; an __ApproachObject__ service created by us as follows:
+As already stated, this node deals with managing what the robot has to do throughout the simulation. To do this we used the __SimpleActionClient__ library to use [PlayMotion](http://wiki.ros.org/Robots/TIAGo/Tutorials/motions/play_motion), thanks to which we were able to send a goal to reach a certain position with an adequate configuration of the robot's joints and then perform a certain action; we used trajectory_msgs.msg package that defines messages for pointing out robot trajectories, so to adjust some movements more accurately or to make the robot move specific parts, such as the head to find the object; an __ApproachObject__ service created by us as follows:
 
 *geometry_msgs/Pose pose*
 
