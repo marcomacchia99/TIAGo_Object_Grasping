@@ -151,7 +151,7 @@ As already mentioned, this node deals with managing what the robot has to do thr
 
 More in specific we have implemented some functions that were necessary to make Tiago perform the actions to do.
 
-Before starting the quick analysis of Tiago's actions, it is important to say that the specific configurations of Tiago's joint positions for the movements he has to do can be found in SOFAR_Assignment/config/pick_motions.yaml.
+Before starting the quick analysis of Tiago's actions, it is important to say that the specific configurations of Tiago's joint positions for the movements he has to do can be found in [pick_motions.yaml](https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/config/pick_motions.yaml).
 
 As soon as the node is launched, thanks to SimpleActionClient we can send a goal with __PlayMotionGoal__, using the send_goal_and_wait function.
 First we send the robot to the home position, then we managed to publish to the `JointTrajectory` topic in order to be able to change the configuration of the joints, in particular, for now, we just want to move the Tiago's head to find the object which is on the table. After that we subscribe to the `/sofar/target_pose/relative` to pick the relative position of the object.
