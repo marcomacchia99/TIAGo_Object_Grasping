@@ -70,6 +70,8 @@ First of all, the purpose of the assignment was not a simple matter to deal with
 Then, the approach used was the more general that we could to better obtain as a final result, a robot which can adjust its position depending on the object 
 coordinates in the space (however the object must remain in the range of the robot camera).
 
+We also decided to use Ros parameters to have a more maintainable and editable code. The params can be found in the _simulation_param.yaml_ file.
+
 Another thing to face up with was that the Objectron tool from Mediapipe returns the frames and coordinates of the robot camera frame, more in specific the xtion_rgb_frame, so we had to dedicate a whole node to extract the relative pose of the object with respect to the camera and with the correct transformations, thanks to tf package functions, have the pose of the object with respect to the base frame (base_footprint) of the robot.
 
 To achieve the final change of coordinates it was necessary to pass through the quaternions as regards the orientation of the object, and then multiply them thanks to the appropriate function `quaternion_multiply` with the corresponding component of each coordinate.
@@ -149,12 +151,23 @@ As already mentioned, this node deals with managing what the robot has to do thr
 
 More in specific we have implemented some functions that were necessary to make Tiago perform the actions to do.
 
+Before starting the quick analysis of Tiago's actions, it is important to say that the specific configurations of Tiago's joint positions for the movements he has to do can be found in SOFAR_Assignment/config/pick_motions.yaml.
+
 As soon as the node is launched, thanks to SimpleActionClient we can send a goal with __PlayMotionGoal__, using the send_goal_and_wait function.
-First we send the robot to the home position, then we managed to publish to the `JointTrajectory` topic in order to be able to change the configuration of the joints, in particular, for now, we just wnat to move the Tiago's head to find the object which is on the table. After that we subscribe to the `/sofar/target_pose/relative` to pick the relative position of the object.
+First we send the robot to the home position, then we managed to publish to the `JointTrajectory` topic in order to be able to change the configuration of the joints, in particular, for now, we just want to move the Tiago's head to find the object which is on the table. After that we subscribe to the `/sofar/target_pose/relative` to pick the relative position of the object.
 
-At this point we have defined the move_head() function that has precisely the purpose previously stated: look down for the object on the table.
+At this point we have used the move_head() function that has precisely the purpose previously stated: look down for the object on the table.
+More precisely within the function we defined the head motion in a decreasing cycle with -0.1 step increments up to a maximum of -1, till an object is recognized (in this case, a cup).
 
+Then we wait for `rel_to_absolute_pose` service and for one second for a correct object recognition.
 
+After taking the position of the object with respect to the base frame, we introduced a displacement with camera recognition bias to check if the robot has to adjust its position to be able to take and see the object in a better way.
+In case the displacement is greater than a threshold (we put 0.1 in our case) a function is called: adjust_position. In the function we publish the velocity to change position of TIAGo to the `cmd_vel` topic. So we defined an angular velocity to turn with w.r.t z axis to prepare the robot to move to the side of the table. We used ros parameters to pass the correct index for rotating Tiago: `rospy.get_param('right_rotation_index')`.
+Then we established a linear velocity to move along the x axis to really get the needed displacement and after that the robot has to make the reverse movement to get to the table.
+
+After this operation the object should be located quite precisely in the central part of the lens. To monitor the view of the object from the point of view of Tiago's camera, just launch the command `rosrun look_to_point` which allows you to have a view from inside the robot's head.
+
+Now we called the function made to prepare the robot for the pregrasp movement: Play motion planning is necessary to put TIAGo in the configuration of pregrasp in order to reach the object.
 
 ### Pick object
 
