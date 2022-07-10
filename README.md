@@ -163,7 +163,7 @@ Then we wait for `rel_to_absolute_pose` service and for one second for a correct
 
 After taking the position of the object with respect to the base frame, we introduced a displacement with camera recognition bias to check if the robot has to adjust its position to be able to take and see the object in a better way.
 In case the displacement is greater than a threshold (we put 0.1 in our case) a function is called: adjust_position. In the function we publish the velocity to change position of TIAGo to the `cmd_vel` topic. So we defined an angular velocity to turn with w.r.t z axis to prepare the robot to move to the side of the table. We used ros parameters to pass the correct index for rotating Tiago: `rospy.get_param('right_rotation_index')`.
-Then we established a linear velocity to move along the x axis to really get the needed displacement and after that the robot has to make the reverse movement to get to the table.
+Then we set a linear velocity to move along the x axis to really get the needed displacement and after that the robot has to make the reverse movement to get to the table.
 
 After this operation the object should be located quite precisely in the central part of the lens. To monitor the view of the object from the point of view of Tiago's camera, just launch the command `rosrun look_to_point` which allows you to have a view from inside the robot's head.
 
