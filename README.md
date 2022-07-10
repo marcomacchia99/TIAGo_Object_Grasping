@@ -169,6 +169,19 @@ After this operation the object should be located quite precisely in the central
 
 Now we called the function made to prepare the robot for the pregrasp movement: Play motion planning is necessary to put TIAGo in the configuration of pregrasp in order to reach the object.
 
+At that moment all we have to do is to wait for the __pickObject__ node to make Tiago take the object, so we wait for a feedback from the /sofar/approach_object service and in case of lack of communication with server we launch an error log message:
+
+```python
+except rospy.ServiceException as e:
+        rospy.logerr(
+            "PickClient - Could not connect to /sofar/approach_object service")
+        exit()
+```
+
+Same process, we wait for the pick_object service, for which however we have not instantiated any specific service, as we just need to be Empty.
+
+Finally we call the go_to_final_position() function that permits Tiago, after it had released the object, to go in the final configuration which is just to raise its arm and depart from the object.
+
 ### Pick object
 
 
