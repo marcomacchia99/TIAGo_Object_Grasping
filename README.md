@@ -184,6 +184,30 @@ Finally we call the go_to_final_position() function that permits Tiago, after it
 
 ### Pick object
 
+As anticipated, the aim of this node is to manage the actual grasping of the object, together with putting the robot in a position to pick it up in the configuration just prior to reaching the object (pregrasp_pose), and at the subsequent raising of the arm after having closed the grippers and got the object (post_grasp_pose).
+
+First of all we there is the initialization of the moveit commander and the definition of the group of joint to adjust the height of TIAGo, in our case `moveit_commander.MoveGroupCommander('arm_torso')`.
+
+Then we implemented 4 main functions useful for our purpose.
+
+The *goToObject(object_pose)* function serves to put the manipulator in the right position to take the object.
+The position of the final absolute object is passed via argument, and the final orientation of the end effector is build through Quaternion.
+We managed to set a vertical offset of the end effector taking care of the environment and of the shape of the object, in order to not collide with the table and to pick the cup in the middle.
+After that we saved the grasp pose and set the distance betwwen the end effector and the object.
+Now we fixed the *pregrasp_pose* in such a way to be located with the robot arm in the right place to pick the object from the point of view of the z and x axis, but with a displacement of -0.2 on the y axis, so that the robot with the next move will go and grab easily the object.
+The function ends with a response `ApproachObjectResponse()` so that when the operation succeeded returns a true status.
+
+The two fundamental functions for managing the closing and opening of the Tiago's end effector's grippers are close_gripper() and open_gripper().
+A publisher was used to publish gripper status on joint trajectory when TIAGo close or open the gripper in this way: (here for the close_gripper() function but the same of open)
+
+```python
+rospy.Publisher('/gripper_controller/command', JointTrajectory, queue_size=1)
+```
+It was necessary to make a loop to wait for the closing or opening operation to take place and to be completed.
+We needed to use `JointTrajectory()` to set the joint group for taking object and JointTrajectoryPoint() to set the total aperture or clamp of the grippers.
+
+This time the gripper joints configuration for the closure has to be set at [0.0, 0.0] while for the maximum gap of opening to [0.044, 0.044].
+
 
 Rqt graph
 ------
