@@ -208,6 +208,26 @@ We needed to use `JointTrajectory()` to set the joint group for taking object an
 
 This time the gripper joints configuration for the closure has to be set at [0.0, 0.0] while for the maximum gap of opening to [0.044, 0.044].
 
+Now, the main function used to cope with the process to make the robot do the right movements for grasping the object is the pick() function.
+At first we have to make Tiago move to the grasp position, the one just before the closing gripper action. We made so, calling the joint group, keep moving the manipulator group to reach the desired position and stopping the manipulator group after having reached the object position:
+
+```python
+    move_group.set_pose_target(grasp_pose)
+    move_group.go(wait=True)
+    move_group.stop()
+    move_group.clear_pose_targets()
+```
+
+Then we called the close_gripper() function, and wait till it is concluded.
+After that we defined post_grasp_pose adn make Tiago's arm move towards it. For the postgrasp pose we decided to make the robot raise up the cup like a cheers gesture and then return to the previous configuration.
+So the next Tiago's movement is to go back to the precedent position, the one where it pick up the cup.
+
+Now the function open_gripper() is called and the robot release the cup on the table.
+
+Hence the robot arm returned to the pregrasp_pose, the one with a little displacement from the object on the y-axis (-0.2).
+
+At the end we chose to move the robot in the *final configuration* that is just the one from which it came from.
+
 
 Rqt graph
 ------
