@@ -3,7 +3,7 @@ seen_object_count: 4
 # vertical position of the EE taking care of its shape (avoid touching table)
 z_axis_offset: 0.1
 # distance between EE & object during grasp
-y_axis_offset: 0.27
+y_axis_offset: 0.3
 #height to be reached with the object in the gripper
 grasp_height: 0.3
 # right rotation duration (in ds)
