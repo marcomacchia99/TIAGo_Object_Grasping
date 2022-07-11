@@ -253,14 +253,21 @@ $ rqt_graph
 
 
 
-UML diagram
+Diagram
 -------
-
-Here it is shown the UML diagram to better understand the whole system.
+This is the functioning diagram of the entire architecture:
 
 <p align="center">
     
 <img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/UML%20diagram.png" width="700" >
+    
+</p>
+
+Here it is shown the UML component diagram to better understand the whole system.
+
+<p align="center">
+    
+<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/component%20diagram.png" width="700" >
     
 </p>
     
