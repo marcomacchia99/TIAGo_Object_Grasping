@@ -267,7 +267,7 @@ Here it is shown the UML component diagram to better understand the whole system
 
 <p align="center">
     
-<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/component%20diagram.png" width="700" >
+<img src="https://github.com/marcomacchia99/SOFAR_Assignment/blob/master/assets/Component%20Diagram.png" width="700" >
     
 </p>
     
